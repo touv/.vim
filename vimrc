@@ -3,6 +3,9 @@
 " Touv's vimrc
 "
 " -----------------------------------------------------------
+
+execute pathogen#infect()
+
 " {{{ Encodage et format par défaut
 " -----------------------------------------------------------
 set encoding=utf8
