@@ -10,3 +10,6 @@
 [submodule "bundle/snipmate-snippets"]
 	path = bundle/snipmate-snippets
 	url = https://github.com/honza/snipmate-snippets.git
+[submodule "bundle/taglist"]
+	path = bundle/taglist
+	url = https://github.com/mortice/taglist.vim.git
