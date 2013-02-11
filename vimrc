@@ -3,9 +3,8 @@
 " Touv's vimrc
 "
 " -----------------------------------------------------------
-
-execute pathogen#infect()
-
+"execute pathogen#infect()
+call pathogen#infect()
 " {{{ Encodage et format par défaut
 " -----------------------------------------------------------
 set encoding=utf8
@@ -26,6 +25,7 @@ set nocompatible    " On n'assura pas la compatiblité avec VI et c'est tant mie
 set noerrorbells    " ne fait pas un bip lors d'une erreur
 set visualbell      " Fait clignoter l'écran lors d'une erreur de saisie, de commande etc...
 set showmatch       " Quand on tape un ), vim montre furtivement le ( correspondant.
+set showcmd
 set foldcolumn=2    " Ajoute une marge à gauche pour afficher les +/- des replis
 set undolevels=2000 " Nombre maximum de changements qui peuvent être annulés
 set spelllang=fr_fr " Langue de correction par défaut
@@ -35,7 +35,7 @@ set spelllang=fr_fr " Langue de correction par défaut
 " -----------------------------------------------------------
 set nowrap          " pas de retour à la ligne automatique
 set sidescroll=5    " (lié à nowrap) nombre minimum de colonnes qui défilent horizontalement
-"set foldcolumn+=a   " reformatage automatique 
+"set foldcolumn+=a   " reformatage automatique
 "set textwidth=80    " largeur du text
 "set wrapmargin=2   " Marge avant coupure
 " }}}
@@ -60,7 +60,7 @@ set com^=sr:*\ -,mb:*\ \ ,el:*/ com^=sr://\ -,mb://\ \ ,el:///
 set shiftwidth=4   " Nombre d'espace pour une tabulation
 set softtabstop=4  " if non-zero, number of spaces to insert for a <tab>
 set tabstop=4      " number of spaces the tab stands for
-set expandtab      " Tabulation génére des espaces
+set noexpandtab    " Tabulation génére des espaces
 " }}}
 
 " {{{ Searching, Substituting, Completion
@@ -132,6 +132,9 @@ let savevers_dirs = &backupdir " Même répertoire de sauvegarde que pour le bac
 " {{{ Mapping
 " -----------------------------------------------------------
 
+let mapleader = ","            " , is easier to type than \
+
+
 " copier, coller
 vmap <S-Del> "*x
 vmap <C-Insert> "*y
@@ -168,9 +171,6 @@ map <F4> :bd!<cr>
 imap <F4> <C-O>:bd!<cr>
 cmap <F4> <c-c>:bd!<cr>
 
-" F6 : Supprime tout les blancs en fin de ligne
-map <F6> :%s/\s\+$//e<CR>
-
 " F7 : Mettre en commentaire cf. EnhancedCommentify
 map <F7> <Plug>Traditionalj
 imap <F7> <esc><Plug>Traditionalji
@@ -189,8 +189,9 @@ imap <F10> <Esc>:set spell!<CR>a
 vnoremap <tab>   =
 nnoremap <tab>   =$
 
-" Supprime tout les blancs en debut de ligne
-nmap _S :%s/^\s\+//<CR>
+" Supprimer les blancs en debut de ligne ou fin de ligne
+nnoremap <leader>s :%s/\s\+$//<cr>:let @/=''<CR>
+nnoremap <leader>S :%s/^\s\+//<cr>:let @/=''<CR>
 
 " Converts file format to/from unix
 command Unixformat :set ff=unix
@@ -222,7 +223,7 @@ if has("autocmd")
     autocmd FileType c,cpp,slang setlocal cindent
     autocmd FileType css setlocal smartindent expandtab ts=2 sts=2 sw=2
     autocmd FileType html setlocal formatoptions+=tl expandtab ts=2 sts=2 sw=2
-    autocmd FileType javascript setlocal formatoptions+=tl noexpandtab ts=4 sts=4 sw=4
+    autocmd FileType javascript setlocal formatoptions+=tl expandtab ts=2 sts=2 sw=2
     autocmd FileType php setlocal cindent expandtab  ts=4 sts=4 sw=4 keywordprg=pman makeprg=php\ -l\ % errorformat=%m\ in\ %f\ on\ line\ %l
     " }}}
 
@@ -231,7 +232,7 @@ if has("autocmd")
     autocmd BufNewFile,BufRead *.rss,*.atom,*.xul setfiletype xml
     autocmd BufNewFile,BufRead *.rst set syntax=rest
     autocmd BufNewFile,BufRead *.pc set syntax=html ft=proc
-    autocmd BufNewFile,BufRead *.ejs setfiletype html.js
+	autocmd BufNewFile,BufRead *.ejs setfiletype html.js
     " }}}
 
     " {{{ 11.4 Divers
@@ -250,6 +251,15 @@ let php_noShortTags = 1
 let php_parent_error_close = 1
 let php_parent_error_open = 1
 let php_folding = 1
+" }}}
+
+" {{{ Pour Syntastic
+" -----------------------------------------------------------
+"set statusline+=%{SyntasticStatuslineFlag()}
+let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['php', 'javascript', 'xml', 'xslt'], 'passive_filetypes': [] }
+let g:syntastic_javascript_checkers=['jshint']
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
 " }}}
 
 " vim:fdm=marker
