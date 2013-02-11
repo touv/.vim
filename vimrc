@@ -171,9 +171,9 @@ map <F4> :bd!<cr>
 imap <F4> <C-O>:bd!<cr>
 cmap <F4> <c-c>:bd!<cr>
 
-" F7 : Mettre en commentaire cf. EnhancedCommentify
-map <F7> <Plug>Traditionalj
-imap <F7> <esc><Plug>Traditionalji
+" F7 : Mettre en commentaire
+map <F7> :call NERDComment(0, "invert")<CR>
+imap <F7> <esc>:call NERDComment(0, "invert")<CR>
 
 " F8 : Liste des tags
 nnoremap <silent> <F8> :TlistToggle<CR>
