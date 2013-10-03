@@ -233,7 +233,7 @@ if has("autocmd")
     autocmd BufNewFile,BufRead *.rss,*.atom,*.xul setfiletype xml
     autocmd BufNewFile,BufRead *.rst set syntax=rest
     autocmd BufNewFile,BufRead *.pc set syntax=html ft=proc
-	autocmd BufNewFile,BufRead *.ejs setfiletype html.js
+	"autocmd BufNewFile,BufRead *.ejs setfiletype html.js
     " }}}
 
     " {{{ 11.4 Divers
