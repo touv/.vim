@@ -263,4 +263,9 @@ let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 " }}}
 
+
+" {{{ Pour Air Line
+" -----------------------------------------------------------
+let g:airline#extensions#tabline#enabled = 1
+" }}}
 " vim:fdm=marker
