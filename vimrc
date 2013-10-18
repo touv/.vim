@@ -21,7 +21,9 @@ Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'briancollins/vim-jst'
 Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-sensible'
+Bundle 'tpope/vim-unimpaired'
 Bundle 'bling/vim-airline'
 
 " From vim-scripts
@@ -56,14 +58,15 @@ scriptencoding utf-8
 " {{{ General
 " -----------------------------------------------------------
 
+" bundle/sensible do that : set backspace=2     " enable backspace to delete anyting (includes \n) in insert mode
+" bundle/sensible do that : set showmatch       " Quand on tape un ), vim montre furtivement le ( correspondant.
+" bundle/sensible do that : set showcmd
+
 set hidden          " Cache les buffers à la place des les décharger
 set autochdir       " Set working directory to the current file
-" bundle/sensible do that : set backspace=2     " enable backspace to delete anyting (includes \n) in insert mode
 set nocompatible    " On n'assura pas la compatiblité avec VI et c'est tant mieux !
 set noerrorbells    " ne fait pas un bip lors d'une erreur
 set visualbell      " Fait clignoter l'écran lors d'une erreur de saisie, de commande etc...
-" bundle/sensible do that : set showmatch       " Quand on tape un ), vim montre furtivement le ( correspondant.
-" bundle/sensible do that : set showcmd
 set foldcolumn=2    " Ajoute une marge à gauche pour afficher les +/- des replis
 set undolevels=2000 " Nombre maximum de changements qui peuvent être annulés
 set spelllang=fr_fr " Langue de correction par défaut
@@ -82,7 +85,7 @@ set sidescroll=5    " (lié à nowrap) nombre minimum de colonnes qui défilent 
 " -----------------------------------------------------------
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=eol:¬,tab:▸\ ,trail:·,precedes:«,extends:»,nbsp:%
-"Invisible character colors
+" Invisible character colors
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
 " }}}
@@ -130,16 +133,16 @@ set guioptions-=T               " supprime la barre d'outils
 
 " {{{ Statusline
 " -----------------------------------------------------------
-set wc=<TAB>                         " use tab for auto-expansion in menus
 " bundle/sensible do that : set wildmenu                         " show a list of all matches when tabbing a command
+" bundle/sensible do that : set history=200                      " remember last 2000 typed commands
+" bundle/sensible do that : set ruler                            " show cursor position below each window
+" bundle/sensible do that : set laststatus=2                     " show always statusline of last window
+set wc=<TAB>                         " use tab for auto-expansion in menus
 set wildmode=list:longest,list:full  " how command line completion works
 set wildignore=*.o,*.r,*.so,*.sl,*.tar,*.tgz " ignore some files for filename completion
 set su=.h,.bak,~,.o,.info,.swp,.obj  " some filetypes got lower priority
-" bundle/sensible do that : set history=200                      " remember last 2000 typed commands
-" bundle/sensible do that : set ruler                            " show cursor position below each window
 set showmode                         " shows the current status (insert, visual, ...) in statusline
-" bundle/sensible do that : set laststatus=2                     " show always statusline of last window
-set shm=at                           " Abréviation des messages
+set shortmess=at                           " Abréviation des messages
 " }}}
 
 " {{{ Souris
@@ -237,12 +240,6 @@ command Dosformat :set ff=dos
 
 " }}}
 
-" {{{ Plugin
-" -----------------------------------------------------------
-
-source $VIMRUNTIME/ftplugin/man.vim          " Active la commande :Man
-
-" }}}
 
 " {{{ Commande Automatique
 " -----------------------------------------------------------
@@ -281,6 +278,11 @@ if has("autocmd")
 endif
 
 "}}}
+"
+" {{{ Pour Man
+" -----------------------------------------------------------
+source $VIMRUNTIME/ftplugin/man.vim          " Active la commande :Man
+" }}}
 
 " {{{ Pour PHP
 " -----------------------------------------------------------
