@@ -1,7 +1,7 @@
 #!/bin/bash
 
 url=$1
-name=`basename $url`
+name=`basename $url .git`
 
 cd ~/.vim
 git submodule add $url bundle/$name

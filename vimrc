@@ -3,9 +3,48 @@
 " my vimrc
 "
 " -----------------------------------------------------------
-" Initialisation de pathogen
-call pathogen#infect()
-call pathogen#helptags()
+
+" {{{ vundle
+" -----------------------------------------------------------
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+
+" From github
+Bundle 'digitaltoad/vim-jade'
+Bundle 'groenewege/vim-less'
+Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'briancollins/vim-jst'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-sensible'
+Bundle 'bling/vim-airline'
+
+" From vim-scripts
+"Bundle 'L9'
+
+" From git
+" Bundle 'git://git.wincent.com/command-t.git'
+
+" From local
+"Bundle 'file:///Users/gmarik/path/to/plugin'
+
+filetype plugin indent on     " required!
+"
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
+" }}}
+
 " {{{ Encodage et format par défaut
 " -----------------------------------------------------------
 set encoding=utf8
@@ -16,8 +55,6 @@ scriptencoding utf-8
 
 " {{{ General
 " -----------------------------------------------------------
-"filetype plugin indent on
-
 
 set hidden          " Cache les buffers à la place des les décharger
 set autochdir       " Set working directory to the current file
