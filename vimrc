@@ -1,6 +1,6 @@
 " ----------------------------------------------------------------
 "
-" Touv's vimrc
+" my vimrc
 "
 " -----------------------------------------------------------
 " Initialisation de pathogen
@@ -16,17 +16,17 @@ scriptencoding utf-8
 
 " {{{ General
 " -----------------------------------------------------------
-filetype plugin indent on
+"filetype plugin indent on
 
 
 set hidden          " Cache les buffers à la place des les décharger
 set autochdir       " Set working directory to the current file
-set backspace=2     " enable backspace to delete anyting (includes \n) in insert mode
+" bundle/sensible do that : set backspace=2     " enable backspace to delete anyting (includes \n) in insert mode
 set nocompatible    " On n'assura pas la compatiblité avec VI et c'est tant mieux !
 set noerrorbells    " ne fait pas un bip lors d'une erreur
 set visualbell      " Fait clignoter l'écran lors d'une erreur de saisie, de commande etc...
-set showmatch       " Quand on tape un ), vim montre furtivement le ( correspondant.
-set showcmd
+" bundle/sensible do that : set showmatch       " Quand on tape un ), vim montre furtivement le ( correspondant.
+" bundle/sensible do that : set showcmd
 set foldcolumn=2    " Ajoute une marge à gauche pour afficher les +/- des replis
 set undolevels=2000 " Nombre maximum de changements qui peuvent être annulés
 set spelllang=fr_fr " Langue de correction par défaut
@@ -72,7 +72,7 @@ set magic         " change the way backslashes are used in search patterns
 set wrapscan      " begin search at top when EOF reached
 set sm            " jump to matches during entering the pattern
 set hls           " highlight all matches...
-set incsearch     " ...and also during entering the pattern
+" bundle/sensible do that : set incsearch     " ...and also during entering the pattern
 
 set completeopt+=menuone
 " }}}
@@ -85,7 +85,7 @@ set nofsync       " improves performance -- let OS decide when to flush disk
 
 " {{{ Highlighting, Colors, Fonts
 " -----------------------------------------------------------
-syntax on                       " Active la coloration syntaxique quand c'est possible
+" bundle/sensible do that : syntax on                       " Active la coloration syntaxique quand c'est possible
 set cursorline
 hi CursorLine guibg=#FFEFFF
 set guioptions-=T               " supprime la barre d'outils
@@ -94,14 +94,14 @@ set guioptions-=T               " supprime la barre d'outils
 " {{{ Statusline
 " -----------------------------------------------------------
 set wc=<TAB>                         " use tab for auto-expansion in menus
-set wildmenu                         " show a list of all matches when tabbing a command
+" bundle/sensible do that : set wildmenu                         " show a list of all matches when tabbing a command
 set wildmode=list:longest,list:full  " how command line completion works
 set wildignore=*.o,*.r,*.so,*.sl,*.tar,*.tgz " ignore some files for filename completion
 set su=.h,.bak,~,.o,.info,.swp,.obj  " some filetypes got lower priority
-set history=200                      " remember last 2000 typed commands
-set ruler                            " show cursor position below each window
+" bundle/sensible do that : set history=200                      " remember last 2000 typed commands
+" bundle/sensible do that : set ruler                            " show cursor position below each window
 set showmode                         " shows the current status (insert, visual, ...) in statusline
-set laststatus=2                     " show always statusline of last window
+" bundle/sensible do that : set laststatus=2                     " show always statusline of last window
 set shm=at                           " Abréviation des messages
 " }}}
 
