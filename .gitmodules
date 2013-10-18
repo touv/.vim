@@ -37,3 +37,6 @@
 [submodule "bundle/vim-sensible"]
 	path = bundle/vim-sensible
 	url = https://github.com/tpope/vim-sensible.git
+[submodule "/home/thouveni/.vim/bundle/vim-airline"]
+	path = /home/thouveni/.vim/bundle/vim-airline
+	url = https://github.com/bling/vim-airline
