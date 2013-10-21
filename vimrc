@@ -31,6 +31,9 @@ Bundle 'briancollins/vim-jst'
 " coloration syntaxique pour markdown
 Bundle 'tpope/vim-markdown'
 
+" indenation pour javascript/jquery/etc.
+Bundle 'jiangmiao/simple-javascript-indenter'
+
 " correction syntax pour plusieurs langages
 Bundle 'scrooloose/syntastic'
 
