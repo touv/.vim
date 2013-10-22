@@ -70,6 +70,9 @@ Bundle 'nelstrom/vim-visual-star-search'
 " Affiche les tags du fichier courant
 Bundle 'majutsushi/tagbar'
 
+" Edit the file with an existing Vim if possible
+Bundle 'svintus/vim-editexisting'
+
 " Pour tricher un peu
 Bundle 'touv/vim-arrow'
 
