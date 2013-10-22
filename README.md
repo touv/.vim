@@ -8,6 +8,7 @@ cd ~/.vim
 git submodule init                            # install submodule
 git submodule update
 vim +BundleInstall +qall                      # install bundles
+vim                                           # enjoy !
 
 ```
 

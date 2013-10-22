@@ -150,7 +150,7 @@ if has('gui_running')
 	set cursorcolumn
 	"hi CursorLine guibg=#FFEFFF
 	"hi CursorColumn guibg=#FFEFFF
-else 
+else
 	colorscheme mustang
 end
 " }}}
