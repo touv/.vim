@@ -31,6 +31,18 @@ Bundle 'briancollins/vim-jst'
 " coloration syntaxique pour markdown
 Bundle 'tpope/vim-markdown'
 
+" coloration syntaxique pour asciidoc
+"Bundle 'dagwieers/asciidoc-vim'
+
+" coloration syntaxique pour reStructuredText
+"Bundle 'vim-scripts/rest.vim'
+
+" coloration syntaxique pour pro c
+"Bundle 'vim-scripts/proc.vim'
+
+" coloration syntaxique pout txt2tags
+"Bundle 'vim-scripts/a-new-txt2tags-syntax'
+
 " indenation pour javascript/jquery/etc.
 Bundle 'jiangmiao/simple-javascript-indenter'
 
