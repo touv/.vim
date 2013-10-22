@@ -16,8 +16,13 @@ Bundle 'gmarik/vundle'
 
 " From github
 
-" réglages de bases partagés par beaucou
+" réglages de bases partagés par beaucoup
 Bundle 'tpope/vim-sensible'
+
+" jeu de couleurs 
+Bundle 'croaker/mustang-vim'
+Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+"Bundle 'endel/vim-github-colorscheme'
 
 " coloration syntaxique pour jade
 Bundle 'digitaltoad/vim-jade'
@@ -43,7 +48,7 @@ Bundle 'tpope/vim-markdown'
 " coloration syntaxique pout txt2tags
 "Bundle 'vim-scripts/a-new-txt2tags-syntax'
 
-" indenation pour javascript/jquery/etc.
+" indentation pour javascript/jquery/etc.
 Bundle 'jiangmiao/simple-javascript-indenter'
 
 " correction syntax pour plusieurs langages
@@ -136,11 +141,17 @@ set tags=tags;~/    " Look for the file in the current directory, then south unt
 "set wrapmargin=2   " Marge avant coupure
 " }}}
 
-" {{{ GUI
+" {{{ Look & feel
 " -----------------------------------------------------------
 if has('gui_running')
 	set guioptions-=T               " supprime la barre d'outils
-	" set transparency=5
+	colorscheme Tomorrow
+	set cursorline
+	set cursorcolumn
+	"hi CursorLine guibg=#FFEFFF
+	"hi CursorColumn guibg=#FFEFFF
+else 
+	colorscheme mustang
 end
 " }}}
 
@@ -177,30 +188,18 @@ set sm            " jump to matches during entering the pattern
 set hls           " highlight all matches...
 " bundle/sensible do that : set incsearch     " ...and also during entering the pattern
 
-set completeopt+=menuone
 
 set infercase
-set completeopt=longest,menuone
-set omnifunc=syntaxcomplete#Complete
-set completefunc=syntaxcomplete#Complete
-set complete=.,w,b,u,U,t,i,d
+set complete=.,w,b,u,U,t,i
+set completeopt=menu,preview,menuone
+"set omnifunc=syntaxcomplete#Complete
+"set completefunc=syntaxcomplete#Complete
 " }}}
 
 " {{{ Optimization
 " -----------------------------------------------------------
 set ttyfast       " Indicates a fast terminal connection
 set nofsync       " improves performance -- let OS decide when to flush disk
-" }}}
-
-" {{{ Curseur
-" -----------------------------------------------------------
-
-if has("gui_running")
-	set cursorline	
-	set cursorcolumn
-	hi CursorLine guibg=#FFEFFF
-	hi CursorColumn guibg=#FFEFFF
-endif
 " }}}
 
 " {{{ Statusline
@@ -346,7 +345,7 @@ xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
 xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 " }}}
 
-" {{{ Pour supprimer les blancs en fin de ligne 
+" {{{ Pour supprimer les blancs en fin de ligne
 " -----------------------------------------------------------
 "nnoremap <leader>s :%s/\s\+$//<cr>:let @/=''<CR>
 noremap <leader>s :call StripWhitespace()<CR>
