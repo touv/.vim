@@ -19,13 +19,17 @@ Bundle 'gmarik/vundle'
 " réglages de bases partagés par beaucoup
 Bundle 'tpope/vim-sensible'
 
-" jeu de couleurs 
+" coloration syntaxique pour la documentatino api blueprint
+Bundle 'kylef/apiblueprint.vim'
+
+" jeu de couleurs
 Bundle 'croaker/mustang-vim'
 Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 "Bundle 'endel/vim-github-colorscheme'
 
 " coloration syntaxique pour jade
-Bundle 'digitaltoad/vim-jade'
+" Bundle 'digitaltoad/vim-jade'
+Bundle 'posva/vim-vue'
 
 " coloration syntaxique pour less
 Bundle 'groenewege/vim-less'
@@ -175,7 +179,7 @@ set com^=sr:*\ -,mb:*\ \ ,el:*/ com^=sr://\ -,mb://\ \ ,el:///
 set shiftwidth=4   " Nombre d'espace pour une tabulation
 set softtabstop=4  " if non-zero, number of spaces to insert for a <tab>
 set tabstop=4      " number of spaces the tab stands for
-set noexpandtab    " Tabulation génére des espaces
+set noexpandtab    " Tabulation ne génére pas des espaces
 " }}}
 
 " {{{ Searching, Substituting, Completion
@@ -375,6 +379,8 @@ let php_parent_error_close = 1
 let php_parent_error_open = 1
 let php_folding = 1
 " }}}
+
+let g:SimpleJsIndenter_BriefMode = 1
 
 " {{{ Pour Syntastic
 " -----------------------------------------------------------
