@@ -1,132 +1,120 @@
 " ----------------------------------------------------------------
-"
-" my vimrc
+"           _
+"    _   __(_)___ ___  __________
+"   | | / / / __ `__ \/ ___/ ___/
+"  _| |/ / / / / / / / /  / /__
+" (_)___/_/_/ /_/ /_/_/   \___/
 "
 " -----------------------------------------------------------
 
-" {{{ vundle
+" {{{ Plugin
 " -----------------------------------------------------------
-set nocompatible               " be iMproved
-filetype off                   " required!
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-Bundle 'gmarik/vundle'
+call plug#begin('~/.vim/bundle')
+Plug 'gmarik/vundle'
 
 " From github
 
 " réglages de bases partagés par beaucoup
-Bundle 'tpope/vim-sensible'
+Plug 'tpope/vim-sensible'
 
 " coloration syntaxique pour la documentatino api blueprint
-Bundle 'kylef/apiblueprint.vim'
+Plug 'kylef/apiblueprint.vim'
 
 " jeu de couleurs
-Bundle 'croaker/mustang-vim'
-"Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
-"Bundle 'endel/vim-github-colorscheme'
+Plug 'croaker/mustang-vim'
+"Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+"Plug 'endel/vim-github-colorscheme'
 
 " coloration syntaxique pour jade
-" Bundle 'digitaltoad/vim-jade'
-"Bundle 'posva/vim-vue'
+" Plug 'digitaltoad/vim-jade'
+"Plug 'posva/vim-vue'
 
 " coloration syntaxique pour less
-Bundle 'groenewege/vim-less'
+Plug 'groenewege/vim-less'
 
 " coloration syntaxique pour jst
-"Bundle 'briancollins/vim-jst'
+"Plug 'briancollins/vim-jst'
 
 " coloration syntaxique pour markdown
-Bundle 'tpope/vim-markdown'
+Plug 'tpope/vim-markdown'
 
 " coloration syntaxique pour asciidoc
-"Bundle 'dagwieers/asciidoc-vim'
+"Plug 'dagwieers/asciidoc-vim'
 
 " coloration syntaxique pour reStructuredText
-"Bundle 'vim-scripts/rest.vim'
+"Plug 'vim-scripts/rest.vim'
 
 " coloration syntaxique pour pro c
-"Bundle 'vim-scripts/proc.vim'
+"Plug 'vim-scripts/proc.vim'
 
 " coloration syntaxique pout txt2tags
-"Bundle 'vim-scripts/a-new-txt2tags-syntax'
+"Plug 'vim-scripts/a-new-txt2tags-syntax'
 
 
 " correction syntax pour plusieurs langages
-Bundle 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 
 " gestion des commentaires pour plusieurs languages
-Bundle 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 
 " pour entrourer ou détrouer des mots/paragrpahe etc.
-Bundle 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 
 " ...
-Bundle 'tpope/vim-unimpaired'
+Plug 'tpope/vim-unimpaired'
 
 " des barres en couleur et sympa status, buffer, tabs, etc.
-Bundle 'bling/vim-airline'
+Plug 'bling/vim-airline'
 
 " Highlights trailing whitespace in red and provides :FixWhitespace to fix it.
-Bundle 'bronson/vim-trailing-whitespace'
+Plug 'bronson/vim-trailing-whitespace'
 
 " affiche les numéros ligen à partir la ligne courant
-"Bundle 'myusuf3/numbers.vim'
+"Plug 'myusuf3/numbers.vim'
 
 " recherche rapide dans des fichiers
-Bundle 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
 " Visualise les indentations par des couleurs
-" Bundle 'nathanaelkane/vim-indent-guides'
+" Plug 'nathanaelkane/vim-indent-guides'
 
 " JSON highlighting and quote concealing
-Bundle "elzr/vim-json"
+Plug 'elzr/vim-json'
 
 " JavaScript syntax
-"Bundle 'jiangmiao/simple-javascript-indenter'
-Bundle 'pangloss/vim-javascript'
-Bundle 'mxw/vim-jsx'
-"Bundle 'othree/yajs.vim'
+"Plug 'jiangmiao/simple-javascript-indenter'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+"Plug 'othree/yajs.vim'
 
 " Syntax highlighting for well-known JS libraries
-Bundle "othree/javascript-libraries-syntax.vim"
+Plug 'othree/javascript-libraries-syntax.vim'
 
 " CSS3 syntax
-Bundle "hail2u/vim-css3-syntax"
+Plug 'hail2u/vim-css3-syntax'
 
 " HTML5 syntax
-Bundle 'othree/html5.vim'
+Plug 'othree/html5.vim'
 
 " gestion mutlicursor
-Bundle 'terryma/vim-multiple-cursors'
+Plug 'terryma/vim-multiple-cursors'
 
 " visualise directment le code d'une couleur
-Bundle 'skammer/vim-css-color'
+Plug 'skammer/vim-css-color'
 
 " Permet de faire de rechercher la sélection visuelle
-Bundle 'nelstrom/vim-visual-star-search'
+Plug 'nelstrom/vim-visual-star-search'
 
 " Affiche les tags du fichier courant
-Bundle 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 
 " Edit the file with an existing Vim if possible
-"Bundle 'svintus/vim-editexisting'
+"Plug 'svintus/vim-editexisting'
 
 " Pour tricher un peu
-Bundle 'touv/vim-arrow'
+Plug 'touv/vim-arrow'
 
-" From vim-scripts
-" Complétion automatique en recherche /<tab>
-" Bundle 'SearchComplete'
-
-" From git
-" Bundle 'git://git.wincent.com/command-t.git'
-
-" From local
-"Bundle 'file://'
-
-filetype plugin indent on     " required!
+call plug#end()
 " }}}
 
 " {{{ Encodage et format par défaut
@@ -145,6 +133,7 @@ scriptencoding utf-8
 " bundle/sensible do that : set showcmd
 " bundle/sensible do that : syntax on                       " Active la coloration syntaxique quand c'est possible
 
+set nocompatible    " be iMproved
 set hidden          " Cache les buffers à la place des les décharger
 set autochdir       " Set working directory to the current file
 set nocompatible    " On n'assura pas la compatiblité avec VI et c'est tant mieux !
