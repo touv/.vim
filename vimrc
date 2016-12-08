@@ -24,18 +24,18 @@ Bundle 'kylef/apiblueprint.vim'
 
 " jeu de couleurs
 Bundle 'croaker/mustang-vim'
-Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+"Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 "Bundle 'endel/vim-github-colorscheme'
 
 " coloration syntaxique pour jade
 " Bundle 'digitaltoad/vim-jade'
-Bundle 'posva/vim-vue'
+"Bundle 'posva/vim-vue'
 
 " coloration syntaxique pour less
 Bundle 'groenewege/vim-less'
 
 " coloration syntaxique pour jst
-Bundle 'briancollins/vim-jst'
+"Bundle 'briancollins/vim-jst'
 
 " coloration syntaxique pour markdown
 Bundle 'tpope/vim-markdown'
@@ -52,8 +52,6 @@ Bundle 'tpope/vim-markdown'
 " coloration syntaxique pout txt2tags
 "Bundle 'vim-scripts/a-new-txt2tags-syntax'
 
-" indentation pour javascript/jquery/etc.
-Bundle 'jiangmiao/simple-javascript-indenter'
 
 " correction syntax pour plusieurs langages
 Bundle 'scrooloose/syntastic'
@@ -70,14 +68,35 @@ Bundle 'tpope/vim-unimpaired'
 " des barres en couleur et sympa status, buffer, tabs, etc.
 Bundle 'bling/vim-airline'
 
+" Highlights trailing whitespace in red and provides :FixWhitespace to fix it.
+Bundle 'bronson/vim-trailing-whitespace'
+
 " affiche les numéros ligen à partir la ligne courant
-Bundle 'myusuf3/numbers.vim'
+"Bundle 'myusuf3/numbers.vim'
 
 " recherche rapide dans des fichiers
 Bundle 'kien/ctrlp.vim'
 
 " Visualise les indentations par des couleurs
 " Bundle 'nathanaelkane/vim-indent-guides'
+
+" JSON highlighting and quote concealing
+Bundle "elzr/vim-json"
+
+" JavaScript syntax
+"Bundle 'jiangmiao/simple-javascript-indenter'
+Bundle 'pangloss/vim-javascript'
+Bundle 'mxw/vim-jsx'
+"Bundle 'othree/yajs.vim'
+
+" Syntax highlighting for well-known JS libraries
+Bundle "othree/javascript-libraries-syntax.vim"
+
+" CSS3 syntax
+Bundle "hail2u/vim-css3-syntax"
+
+" HTML5 syntax
+Bundle 'othree/html5.vim'
 
 " gestion mutlicursor
 Bundle 'terryma/vim-multiple-cursors'
@@ -92,7 +111,7 @@ Bundle 'nelstrom/vim-visual-star-search'
 Bundle 'majutsushi/tagbar'
 
 " Edit the file with an existing Vim if possible
-Bundle 'svintus/vim-editexisting'
+"Bundle 'svintus/vim-editexisting'
 
 " Pour tricher un peu
 Bundle 'touv/vim-arrow'
@@ -135,7 +154,9 @@ set foldcolumn=2    " Ajoute une marge à gauche pour afficher les +/- des repli
 set undolevels=2000 " Nombre maximum de changements qui peuvent être annulés
 set spelllang=fr,en " Langue de correction par défaut
 set title           " donne un titre aux fenetres xterm
+set number          " affiche les numéros de ligne
 set nowrap          " pas de retour à la ligne automatique
+set nojoinspaces    " J command doesn't add extra space
 set sidescroll=5    " (lié à nowrap) nombre minimum de colonnes qui défilent horizontalement
 set scrolloff=1     " commence le défilement vertical N lignes avant
 set tags=tags;~/    " Look for the file in the current directory, then south until you reach home.
@@ -149,7 +170,8 @@ set tags=tags;~/    " Look for the file in the current directory, then south unt
 " -----------------------------------------------------------
 if has('gui_running')
 	set guioptions-=T               " supprime la barre d'outils
-	colorscheme Tomorrow
+	"colorscheme Tomorrow
+	colorscheme zellner
 	set cursorline
 	set cursorcolumn
 	"hi CursorLine guibg=#FFEFFF
@@ -162,7 +184,13 @@ end
 " {{{ Caractères invisibles
 " -----------------------------------------------------------
 " Use the same symbols as TextMate for tabstops and EOLs
-set listchars=eol:¬,tab:▸\ ,trail:·,precedes:«,extends:»,nbsp:%
+"set list
+set listchars=eol:¬
+set listchars+=tab:→\ 
+set listchars+=trail:·
+set listchars+=extends:»              " show cut off when nowrap
+set listchars+=precedes:«
+set listchars+=nbsp:⣿
 " Invisible character colors
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
@@ -215,7 +243,17 @@ set nofsync       " improves performance -- let OS decide when to flush disk
 set wildchar=<TAB>														 " use tab for auto-expansion in menus
 set wildmode=list:longest,list:full									 " how command line completion works
 set wildignore=*.o,*.r,*.so,*.sl,*.tar,*.tgz						 " ignore some files for filename completion
+set wildignore+=*.*~,*~
 set wildignore+=*.DS_STORE,*.db,node_modules/**,*.jpg,*.png,*.gif
+set wildignore+=*.swp,.lock,.DS_Store,._*,tags.lock
+set wildignore+=*.min.*
+set wildignore+=*.aux,*.out,*.toc
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.jar,*.pyc,*.rbc,*.class
+set wildignore+=*.ai,*.bmp,*.gif,*.ico,*.jpg,*.jpeg,*.png,*.psd,*.webp
+set wildignore+=*.avi,*.m4a,*.mp3,*.oga,*.ogg,*.wav,*.webm
+set wildignore+=*.eot,*.otf,*.ttf,*.woff
+set wildignore+=*.doc,*.pdf
+set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 set su=.h,.bak,~,.o,.info,.swp,.obj									 " some filetypes got lower priority
 set showmode														 " shows the current status (insert, visual, ...) in statusline
 set shortmess=at													 " Abréviation des messages
@@ -231,19 +269,39 @@ set mouse=a                         " Utilisation de la souris dans les terminau
 set mousehide                       " Hide the mouse cursor while typing
 " }}}
 
+
+" {{{ Clipboard -- use os clipboard
+" -----------------------------------------------------------
+
+set pastetoggle=<F12>
+
+if empty($SSH_CONNECTION) && has('clipboard')
+  set clipboard^=unnamed                " Use vim global clipboard register
+  if has('unnamedplus') || has('nvim')  " Use system clipboard register
+    set clipboard^=unnamedplus
+  endif
+endif
+" }}}
+
 " {{{ Fenetres
 " -----------------------------------------------------------
-set wh=1           " minimal number of lines used for the current window
-set wmh=0          " minimal number of lines used for any window
-set noequalalways  " make all windows the same size when adding/removing windows
-"set splitbelow     "a new window is put below the current one
+set wh=1                " minimal number of lines used for the current window
+set wmh=0               " minimal number of lines used for any window
+set noequalalways       " make all windows the same size when adding/removing windows
+set splitbelow          "a new window is put below the current one
+set splitright
+set fillchars=vert:│    " Vertical sep between windows (unicode)
+" reveal already opened files from the quickfix window instead of opening new
+" buffers
+set switchbuf=useopen
+set nostartofline       " don't jump to col1 on switch buffer
 " }}}
 
 " {{{ Sauvegarde
 " -----------------------------------------------------------
 set backupdir=~/.backup,/tmp        " Répertoire de sauvegarde automatique
 set backup                          " On active la sauvagarde
-let savevers_dirs = &backupdir      " Même répertoire de sauvegarde que pour le backup classique
+let g:savevers_dirs = &backupdir      " Même répertoire de sauvegarde que pour le backup classique
 "set updatecount=0                  " Supprime l'utilisation du fichier d'échange
 " }}}
 
@@ -271,6 +329,8 @@ nnoremap <tab>   =$
 " Highlight all occurences of the current word with SHIFT+* (µ on azerty)
 nnoremap µ :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 
+" Affiche les caractères spéciaux
+nmap <F2> :set list!<CR>
 
 " Toggle tagbar
 nmap <F8> :TagbarToggle<CR>
@@ -279,6 +339,17 @@ nmap <F8> :TagbarToggle<CR>
 nnoremap <F10>	  :set spell! spell?<CR>
 imap     <F10>	  <C-o><F10>
 vmap     <F10>	  <C-c><F10>
+
+noremap <leader>s :FixWhitespace<CR>
+
+"Toggle Spell check
+nnoremap <F10>	  :set spell! spell?<CR>
+imap     <F10>	  <C-o><F10>
+vmap     <F10>	  <C-c><F10>
+
+" Analyse du code
+nmap <F12> :SyntasticCheck<CR>
+nmap <C-F12> :SyntasticInfo<CR>
 
 " }}}
 
@@ -349,23 +420,6 @@ xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
 xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 " }}}
 
-" {{{ Pour supprimer les blancs en fin de ligne
-" -----------------------------------------------------------
-"nnoremap <leader>s :%s/\s\+$//<cr>:let @/=''<CR>
-noremap <leader>s :call StripWhitespace()<CR>
-nnoremap <leader>S :%s/^\s\+//<cr>:let @/=''<CR>
-" Strip trailing whitespace
-function! StripWhitespace ()
-	let save_cursor = getpos(".")
-	let old_query = getreg('/')
-	:%s/\s\+$//e
-	call setpos('.', save_cursor)
-	call setreg('/', old_query)
-endfunction
-
-" }}}
-
-
 " {{{ Pour Man
 " -----------------------------------------------------------
 source $VIMRUNTIME/ftplugin/man.vim          " Active la commande :Man
@@ -380,24 +434,93 @@ let php_parent_error_open = 1
 let php_folding = 1
 " }}}
 
-let g:SimpleJsIndenter_BriefMode = 1
-
 " {{{ Pour Syntastic
 " -----------------------------------------------------------
 "set statusline+=%{SyntasticStatuslineFlag()}
 let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['php', 'javascript', 'xml', 'xslt'], 'passive_filetypes': ['html.js', 'html'] }
-let g:syntastic_javascript_checkers=['jshint']
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_signs=1
+let g:syntastic_javascript_checkers=['jshint']
+let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
+let g:syntastic_html_checkers=['tidy']
+let g:syntastic_vim_checkers=['vimlint']
+let g:syntastic_json_checkers=['jsonlint']
+let g:syntastic_yaml_checkers=['js-yaml']
+let g:syntastic_scss_checkers=['scss-lint']
+let g:syntastic_css_checkers=['csslint']
+let g:syntastic_handlebars_checkers=['handlebars']
+let g:syntastic_tpl_checkers=['handlebars']
+
+" get available js linters
+" it returns the mapping between a linter and the config files
+function! GetJslinters()
+    return {
+    \    'eslint' : [ '.eslintrc',  '.eslintrc.json',  '.eslintrc.js', '.eslint.yml' ],
+    \    'jshint' : [ '.jshintrc']
+    \ }
+endfunction
+
+" check if the path to see if a linter config is present
+function! Jslinter(path, linters)
+    let l:dir = fnamemodify(a:path, ':p:h')
+
+    if(l:dir == '/')
+        return ['']
+    endif
+
+    for l:linter in keys(a:linters)
+        for l:linterConfig in a:linters[l:linter]
+            if filereadable(l:dir . '/' . l:linterConfig)
+                let l:localLinter = l:dir . '/node_modules/.bin/' . l:linter
+                if executable(l:localLinter)
+                    return [l:linter, l:localLinter]
+                endif
+                return [l:linter, l:linter]
+            endif
+        endfor
+    endfor
+
+    return Jslinter(fnamemodify(l:dir, ':h'), a:linters)
+endfunction
+
+" set the jslinter into Syntastic
+function! SyntasticSetJsLinter()
+
+    let l:availableLinters = GetJslinters()
+
+    " look for linter config in the current folder
+    let l:jslinter = Jslinter(expand('%:p'), l:availableLinters)
+    if l:jslinter[0] == ''
+        " otherwise look into the home dir
+        let l:jslinter = Jslinter($HOME, l:availableLinters)
+    endif
+
+    " configure the linter
+    if l:jslinter[0] != ''
+        let g:syntastic_javascript_checkers=[l:jslinter[0]]
+        if l:jslinter[0] != l:jslinter[1]
+            exec 'let g:syntastic_javascript_' . l:jslinter[0] . '_exec = "' . l:jslinter[1] . '"'
+        endif
+        let g:syntastic_javascript_checkers=[l:jslinter[0]]
+    endif
+endfunction
+
+call SyntasticSetJsLinter()
+
+" }}}
+
+" {{{ Airline
+" -----------------------------------------------------------
+let g:airline#extensions#tabline#enabled = 1
 " }}}
 
 " {{{ Pour vim-css-color
 " -----------------------------------------------------------
-let g:cssColorVimDoNotMessMyUpdatetime = 1
+let g:used_javascript_libs = 'jquery,underscore,react,handlebars,vue,d3'  "javascript-libraries-syntax.vim
+let g:cssColorVimDoNotMessMyUpdatetime = 1 "vim-css-color
 " }}}
 
-" {{{ Pour Air Line
-" -----------------------------------------------------------
-let g:airline#extensions#tabline#enabled = 1
-" }}}
+
 " vim:fdm=marker
