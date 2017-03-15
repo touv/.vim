@@ -53,6 +53,7 @@ Plug 'tpope/vim-markdown'
 
 " correction syntax pour plusieurs langages
 Plug 'scrooloose/syntastic'
+Plug 'mtscout6/syntastic-local-eslint.vim'
 
 " gestion des commentaires pour plusieurs languages
 Plug 'scrooloose/nerdcommenter'
@@ -73,7 +74,7 @@ Plug 'bronson/vim-trailing-whitespace'
 "Plug 'myusuf3/numbers.vim'
 
 " recherche rapide dans des fichiers
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
 
 " Visualise les indentations par des couleurs
 " Plug 'nathanaelkane/vim-indent-guides'
@@ -113,6 +114,9 @@ Plug 'majutsushi/tagbar'
 
 " Pour tricher un peu
 Plug 'touv/vim-arrow'
+
+" Projet vimrc
+Plug 'embear/vim-localvimrc'
 
 call plug#end()
 " }}}
@@ -258,7 +262,6 @@ set mouse=a                         " Utilisation de la souris dans les terminau
 set mousehide                       " Hide the mouse cursor while typing
 " }}}
 
-
 " {{{ Clipboard -- use os clipboard
 " -----------------------------------------------------------
 
@@ -380,9 +383,9 @@ if has("autocmd")
 	"autocmd BufNewFile,BufRead *.ejs setfiletype html.js
 	" }}}
 
-	" {{{ 11.4 Divers
+	" {{{ Divers
 	"    autocmd BufRead *\[[0-9]] set syntax=html filetype=html
-	"    autocmd BufEnter * lcd %:p:h   " change to directory of current file automatically
+    autocmd BufEnter * lcd %:p:h   " change to directory of current file automatically
 	" }}}
 
 endif
@@ -426,77 +429,17 @@ let php_folding = 1
 " {{{ Pour Syntastic
 " -----------------------------------------------------------
 "set statusline+=%{SyntasticStatuslineFlag()}
-let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['php', 'javascript', 'xml', 'xslt'], 'passive_filetypes': ['html.js', 'html'] }
+"let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['php', 'javascript', 'xml', 'xslt'], 'passive_filetypes': ['html.js', 'html'] }
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_signs=1
-let g:syntastic_javascript_checkers=['jshint']
-let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
-let g:syntastic_html_checkers=['tidy']
-let g:syntastic_vim_checkers=['vimlint']
-let g:syntastic_json_checkers=['jsonlint']
-let g:syntastic_yaml_checkers=['js-yaml']
-let g:syntastic_scss_checkers=['scss-lint']
-let g:syntastic_css_checkers=['csslint']
-let g:syntastic_handlebars_checkers=['handlebars']
-let g:syntastic_tpl_checkers=['handlebars']
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
 
-" get available js linters
-" it returns the mapping between a linter and the config files
-function! GetJslinters()
-    return {
-    \    'eslint' : [ '.eslintrc',  '.eslintrc.json',  '.eslintrc.js', '.eslint.yml' ],
-    \    'jshint' : [ '.jshintrc']
-    \ }
-endfunction
-
-" check if the path to see if a linter config is present
-function! Jslinter(path, linters)
-    let l:dir = fnamemodify(a:path, ':p:h')
-
-    if(l:dir == '/')
-        return ['']
-    endif
-
-    for l:linter in keys(a:linters)
-        for l:linterConfig in a:linters[l:linter]
-            if filereadable(l:dir . '/' . l:linterConfig)
-                let l:localLinter = l:dir . '/node_modules/.bin/' . l:linter
-                if executable(l:localLinter)
-                    return [l:linter, l:localLinter]
-                endif
-                return [l:linter, l:linter]
-            endif
-        endfor
-    endfor
-
-    return Jslinter(fnamemodify(l:dir, ':h'), a:linters)
-endfunction
-
-" set the jslinter into Syntastic
-function! SyntasticSetJsLinter()
-
-    let l:availableLinters = GetJslinters()
-
-    " look for linter config in the current folder
-    let l:jslinter = Jslinter(expand('%:p'), l:availableLinters)
-    if l:jslinter[0] == ''
-        " otherwise look into the home dir
-        let l:jslinter = Jslinter($HOME, l:availableLinters)
-    endif
-
-    " configure the linter
-    if l:jslinter[0] != ''
-        let g:syntastic_javascript_checkers=[l:jslinter[0]]
-        if l:jslinter[0] != l:jslinter[1]
-            exec 'let g:syntastic_javascript_' . l:jslinter[0] . '_exec = "' . l:jslinter[1] . '"'
-        endif
-        let g:syntastic_javascript_checkers=[l:jslinter[0]]
-    endif
-endfunction
-
-call SyntasticSetJsLinter()
+"let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
+"let b:syntastic_javascript_eslint_exec = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
+"let g:syntastic_check_on_open = 1
 
 " }}}
 
@@ -510,6 +453,5 @@ let g:airline#extensions#tabline#enabled = 1
 let g:used_javascript_libs = 'jquery,underscore,react,handlebars,vue,d3'  "javascript-libraries-syntax.vim
 let g:cssColorVimDoNotMessMyUpdatetime = 1 "vim-css-color
 " }}}
-
 
 " vim:fdm=marker
