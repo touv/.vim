@@ -115,8 +115,8 @@ Plug 'majutsushi/tagbar'
 " Pour tricher un peu
 Plug 'touv/vim-arrow'
 
-" Projet vimrc
-Plug 'embear/vim-localvimrc'
+" vimrc by directory
+Plug 'thinca/vim-localrc'
 
 call plug#end()
 " }}}
@@ -436,10 +436,6 @@ let g:syntastic_check_on_open=1
 let g:syntastic_enable_signs=1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
-
-"let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
-"let b:syntastic_javascript_eslint_exec = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
-"let g:syntastic_check_on_open = 1
 
 " }}}
 
