@@ -44,11 +44,13 @@ nnoremap <F3> :UndotreeToggle<cr>
 " Ajout d'un menu d'accueil
 Plug 'mhinz/vim-startify'
 
-" Recherche "fuzzy" de fichiers, de buffer
+" {{{ CTRL P :Recherche "fuzzy" de fichiers, de buffer
+" -----------------------------------------------------------
 Plug 'ctrlpvim/ctrlp.vim'
-
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
 " Recherche "fuzzy" de functions
 Plug 'tacahiroy/ctrlp-funky'
+" }}}
 
 " pour entrourer ou détrouer des mots/paragrpahe etc.
 Plug 'tpope/vim-surround'
