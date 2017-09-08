@@ -7,7 +7,7 @@
 "
 " -----------------------------------------------------------
 
-" {{{ Plugin
+" {{{ Plugins
 " -----------------------------------------------------------
 call plug#begin('~/.vim/bundle')
 Plug 'gmarik/vundle'
@@ -17,11 +17,34 @@ Plug 'gmarik/vundle'
 " réglages de bases partagés par beaucoup
 Plug 'tpope/vim-sensible'
 
+
+"Plug 'itchyny/vim-parenmatch'
+"let g:loaded_matchparen = 1
+Plug 'itchyny/vim-cursorword'
+Plug 'itchyny/vim-highlighturl'
+Plug 'yuttie/comfortable-motion.vim'
+nnoremap <silent> <PageDown> :call comfortable_motion#flick(200)<CR>
+nnoremap <silent> <PageUp> :call comfortable_motion#flick(-200)<CR>
+Plug 'shougo/vimfiler.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'mbbill/undotree'
+nnoremap <F5> :UndotreeToggle<cr>
+Plug 'mhinz/vim-startify'
+
+"Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+"Plug 'Shougo/vimshell.vim'
+
+" affichage des tabulations sous forme de ligne verticale
+Plug 'yggdroot/indentline'
+let g:indentLine_color_gui = '#1E1E1E'
+let g:indentLine_char = '▏'
+
 " coloration syntaxique pour la documentatino api blueprint
 Plug 'kylef/apiblueprint.vim'
 
 " jeu de couleurs
-Plug 'croaker/mustang-vim'
+"Plug 'croaker/mustang-vim'
+Plug 'junegunn/seoul256.vim'
 "Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 "Plug 'endel/vim-github-colorscheme'
 
@@ -30,7 +53,7 @@ Plug 'croaker/mustang-vim'
 "Plug 'posva/vim-vue'
 
 " coloration syntaxique pour less
-Plug 'groenewege/vim-less'
+"Plug 'groenewege/vim-less'
 
 " coloration syntaxique pour jst
 "Plug 'briancollins/vim-jst'
@@ -51,21 +74,41 @@ Plug 'tpope/vim-markdown'
 "Plug 'vim-scripts/a-new-txt2tags-syntax'
 
 
-" correction syntax pour plusieurs langages
+" {{{ Pour Syntastic : correction syntax pour plusieurs langages
+" -----------------------------------------------------------
 Plug 'scrooloose/syntastic'
 Plug 'mtscout6/syntastic-local-eslint.vim'
+nmap <F12> :SyntasticCheck<CR>
+nmap <C-F12> :SyntasticInfo<CR>
+"set statusline+=%{SyntasticStatuslineFlag()}
+"let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['php', 'javascript', 'xml', 'xslt'], 'passive_filetypes': ['html.js', 'html'] }
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_signs=1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+" }}}
 
-" gestion des commentaires pour plusieurs languages
+
+
+" {{{ Pour NERDCommenter : gestion des commentaires pour plusieurs languages
+" -----------------------------------------------------------
 Plug 'scrooloose/nerdcommenter'
+let NERDSpaceDelims=1               " space around delimiters
+let NERDRemoveExtraSpaces=1
+" }}}
 
 " pour entrourer ou détrouer des mots/paragrpahe etc.
 Plug 'tpope/vim-surround'
 
 " ...
-Plug 'tpope/vim-unimpaired'
+"Plug 'tpope/vim-unimpaired'
 
 " des barres en couleur et sympa status, buffer, tabs, etc.
 Plug 'bling/vim-airline'
+let g:airline#extensions#tabline#enabled = 1
+"Plug 'itchyny/lightline.vim'
 
 " Highlights trailing whitespace in red and provides :FixWhitespace to fix it.
 Plug 'bronson/vim-trailing-whitespace'
@@ -85,11 +128,13 @@ Plug 'elzr/vim-json'
 " JavaScript syntax
 "Plug 'jiangmiao/simple-javascript-indenter'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+"Plug 'mxw/vim-jsx'
+Plug 'maxmellon/vim-jsx-pretty'
 "Plug 'othree/yajs.vim'
 
 " Syntax highlighting for well-known JS libraries
 Plug 'othree/javascript-libraries-syntax.vim'
+let g:used_javascript_libs = 'jquery,underscore,react,handlebars,vue,d3'  "javascript-libraries-syntax.vim
 
 " CSS3 syntax
 Plug 'hail2u/vim-css3-syntax'
@@ -102,12 +147,16 @@ Plug 'terryma/vim-multiple-cursors'
 
 " visualise directment le code d'une couleur
 Plug 'skammer/vim-css-color'
+let g:cssColorVimDoNotMessMyUpdatetime = 1
+
 
 " Permet de faire de rechercher la sélection visuelle
+"Plug 'thinca/vim-visualstar'
 Plug 'nelstrom/vim-visual-star-search'
 
 " Affiche les tags du fichier courant
 Plug 'majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
 
 " Edit the file with an existing Vim if possible
 "Plug 'svintus/vim-editexisting'
@@ -161,16 +210,13 @@ set tags=tags;~/    " Look for the file in the current directory, then south unt
 
 " {{{ Look & feel
 " -----------------------------------------------------------
+colorscheme seoul256
 if has('gui_running')
 	set guioptions-=T               " supprime la barre d'outils
-	"colorscheme Tomorrow
-	colorscheme zellner
 	set cursorline
 	set cursorcolumn
 	"hi CursorLine guibg=#FFEFFF
 	"hi CursorColumn guibg=#FFEFFF
-else
-	colorscheme mustang
 end
 " }}}
 
@@ -178,6 +224,7 @@ end
 " -----------------------------------------------------------
 " Use the same symbols as TextMate for tabstops and EOLs
 "set list
+nmap <F2> :set list!<CR>
 set listchars=eol:¬
 set listchars+=tab:→\ 
 set listchars+=trail:·
@@ -212,7 +259,12 @@ set wrapscan      " begin search at top when EOF reached
 set sm            " jump to matches during entering the pattern
 set hls           " highlight all matches...
 " bundle/sensible do that : set incsearch     " ...and also during entering the pattern
-
+set showmode														 " shows the current status (insert, visual, ...) in statusline
+set shortmess=at													 " Abréviation des messages
+" bundle/sensible do that : set wildmenu							 " show a list of all matches when tabbing a command
+" bundle/sensible do that : set history=200							 " remember last 2000 typed commands
+" bundle/sensible do that : set ruler								 " show cursor position below each window
+" bundle/sensible do that : set laststatus=2						 " show always statusline of last window
 
 set infercase
 set complete=.,w,b,u,U,t,i
@@ -227,12 +279,8 @@ set ttyfast       " Indicates a fast terminal connection
 set nofsync       " improves performance -- let OS decide when to flush disk
 " }}}
 
-" {{{ Statusline
+" {{{ Completion des noms de fichier
 " -----------------------------------------------------------
-" bundle/sensible do that : set wildmenu							 " show a list of all matches when tabbing a command
-" bundle/sensible do that : set history=200							 " remember last 2000 typed commands
-" bundle/sensible do that : set ruler								 " show cursor position below each window
-" bundle/sensible do that : set laststatus=2						 " show always statusline of last window
 set wildchar=<TAB>														 " use tab for auto-expansion in menus
 set wildmode=list:longest,list:full									 " how command line completion works
 set wildignore=*.o,*.r,*.so,*.sl,*.tar,*.tgz						 " ignore some files for filename completion
@@ -248,8 +296,6 @@ set wildignore+=*.eot,*.otf,*.ttf,*.woff
 set wildignore+=*.doc,*.pdf
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 set su=.h,.bak,~,.o,.info,.swp,.obj									 " some filetypes got lower priority
-set showmode														 " shows the current status (insert, visual, ...) in statusline
-set shortmess=at													 " Abréviation des messages
 " }}}
 
 " {{{ Souris
@@ -265,7 +311,7 @@ set mousehide                       " Hide the mouse cursor while typing
 " {{{ Clipboard -- use os clipboard
 " -----------------------------------------------------------
 
-set pastetoggle=<F12>
+"set pastetoggle=<F12>
 
 if empty($SSH_CONNECTION) && has('clipboard')
   set clipboard^=unnamed                " Use vim global clipboard register
@@ -302,30 +348,30 @@ let g:savevers_dirs = &backupdir      " Même répertoire de sauvegarde que pour
 
 let mapleader = ","            " , is easier to type than \
 
-" Selection tout le fichier
-map <C-a> ggVG
+" use gvim like other application (Ubuntu Shell, Chrome, etc.)
+if has('gui_running')
+    " Selection tout le fichier
+    map <C-a> ggVG
+    " CTRL+PAGEUP / CTRL+PAGEDOWN pour circuler entre les Tampons
+    nnoremap <C-PageDown> :bn!<CR>
+    nnoremap <C-PageUp> :bp!<CR>
 
-" CTRL+PAGEUP / CTRL+PAGEDOWN pour circuler entre les Tampons
-nnoremap <C-PageDown> :bn!<CR>
-nnoremap <C-PageUp> :bp!<CR>
+    " CTRL+SHIFT-w : fermeture forcer d'un tampon
+    map <C-S-w> :bd!<cr>
+    imap <C-S-w> <C-O>:bd!<cr>
+    cmap <C-S-w> <c-c>:bd!<cr>
+end
 
-" CTRL+q : fermeture forcer d'un tampon
-map <C-q> :bd!<cr>
-imap <C-q> <C-O>:bd!<cr>
-cmap <C-q> <c-c>:bd!<cr>
+
 
 " Indentation automatique (Emacs's style)
 vnoremap <tab>   =
 nnoremap <tab>   =$
 
 " Highlight all occurences of the current word with SHIFT+* (µ on azerty)
-nnoremap µ :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+" Cursorword is better
+" nnoremap µ :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 
-" Affiche les caractères spéciaux
-nmap <F2> :set list!<CR>
-
-" Toggle tagbar
-nmap <F8> :TagbarToggle<CR>
 
 "Toggle Spell check
 nnoremap <F10>	  :set spell! spell?<CR>
@@ -339,9 +385,6 @@ nnoremap <F10>	  :set spell! spell?<CR>
 imap     <F10>	  <C-o><F10>
 vmap     <F10>	  <C-c><F10>
 
-" Analyse du code
-nmap <F12> :SyntasticCheck<CR>
-nmap <C-F12> :SyntasticInfo<CR>
 
 " }}}
 
@@ -392,11 +435,6 @@ endif
 
 "}}}
 
-" {{{ Pour NERDCommenter
-" -----------------------------------------------------------
-let NERDSpaceDelims=1               " space around delimiters
-let NERDRemoveExtraSpaces=1
-" }}}
 
 " {{{ Pour visual-star-search
 " -----------------------------------------------------------
@@ -417,37 +455,15 @@ xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 source $VIMRUNTIME/ftplugin/man.vim          " Active la commande :Man
 " }}}
 
-" {{{ Pour PHP
+" {{{ Réglage pour quleques langages
 " -----------------------------------------------------------
 let php_sql_query = 1
 let php_noShortTags = 1
 let php_parent_error_close = 1
 let php_parent_error_open = 1
 let php_folding = 1
-" }}}
-
-" {{{ Pour Syntastic
-" -----------------------------------------------------------
-"set statusline+=%{SyntasticStatuslineFlag()}
-"let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['php', 'javascript', 'xml', 'xslt'], 'passive_filetypes': ['html.js', 'html'] }
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_check_on_open=1
-let g:syntastic_enable_signs=1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
 
 " }}}
 
-" {{{ Airline
-" -----------------------------------------------------------
-let g:airline#extensions#tabline#enabled = 1
-" }}}
-
-" {{{ Pour vim-css-color
-" -----------------------------------------------------------
-let g:used_javascript_libs = 'jquery,underscore,react,handlebars,vue,d3'  "javascript-libraries-syntax.vim
-let g:cssColorVimDoNotMessMyUpdatetime = 1 "vim-css-color
-" }}}
 
 " vim:fdm=marker
