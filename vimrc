@@ -7,37 +7,56 @@
 "
 " -----------------------------------------------------------
 
+let s:vim8 = has('patch-8.0.0039') && exists('*job_start')
+
 " {{{ Plugins
 " -----------------------------------------------------------
 call plug#begin('~/.vim/bundle')
 Plug 'gmarik/vundle'
 
-" From github
-
 " réglages de bases partagés par beaucoup
 Plug 'tpope/vim-sensible'
 
-
-"Plug 'itchyny/vim-parenmatch'
-"let g:loaded_matchparen = 1
+" Souligne les mots identiques automatiquement
 Plug 'itchyny/vim-cursorword'
+
+" Souligne les urls
 Plug 'itchyny/vim-highlighturl'
+
+" Affiche les début & fin de balises HTML, XML, etc.
+Plug 'Valloric/MatchTagAlways'
+
+" Scroll de page en page amélioré
 Plug 'yuttie/comfortable-motion.vim'
 nnoremap <silent> <PageDown> :call comfortable_motion#flick(200)<CR>
 nnoremap <silent> <PageUp> :call comfortable_motion#flick(-200)<CR>
+
+" Explorateur de fichiers amélioré
 Plug 'shougo/vimfiler.vim'
+
+" Identifier les lignes modfifées 
 Plug 'airblade/vim-gitgutter'
+
+" Affiche l'arbre des annulations
 Plug 'mbbill/undotree'
-nnoremap <F5> :UndotreeToggle<cr>
+nnoremap <F3> :UndotreeToggle<cr>
+
+" Ajout d'un menu d'accueil
 Plug 'mhinz/vim-startify'
 
-"Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-"Plug 'Shougo/vimshell.vim'
+" Recherche "fuzzy" de fichiers, de buffer
+Plug 'ctrlpvim/ctrlp.vim'
+
+" Recherche "fuzzy" de functions
+Plug 'tacahiroy/ctrlp-funky'
+
+" pour entrourer ou détrouer des mots/paragrpahe etc.
+Plug 'tpope/vim-surround'
 
 " affichage des tabulations sous forme de ligne verticale
 Plug 'yggdroot/indentline'
-let g:indentLine_color_gui = '#1E1E1E'
-let g:indentLine_char = '▏'
+let g:indentLine_color_gui = '#5E726D'
+let g:indentLine_char = '┊'
 
 " coloration syntaxique pour la documentatino api blueprint
 Plug 'kylef/apiblueprint.vim'
@@ -73,24 +92,45 @@ Plug 'tpope/vim-markdown'
 " coloration syntaxique pout txt2tags
 "Plug 'vim-scripts/a-new-txt2tags-syntax'
 
-
-" {{{ Pour Syntastic : correction syntax pour plusieurs langages
+" {{{ AirLine
 " -----------------------------------------------------------
-Plug 'scrooloose/syntastic'
-Plug 'mtscout6/syntastic-local-eslint.vim'
-nmap <F12> :SyntasticCheck<CR>
-nmap <C-F12> :SyntasticInfo<CR>
-"set statusline+=%{SyntasticStatuslineFlag()}
-"let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['php', 'javascript', 'xml', 'xslt'], 'passive_filetypes': ['html.js', 'html'] }
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_check_on_open=1
-let g:syntastic_enable_signs=1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#buffer_nr_show = 1
+"Plug 'itchyny/lightline.vim'
 " }}}
 
-
+" {{{ Lint
+" -----------------------------------------------------------
+if s:vim8
+    Plug 'w0rp/ale'
+    let g:airline_section_error = '%{ALEGetStatusLine()}'
+    let g:ale_sign_error = '✘'
+    let g:ale_sign_warning = '❗'
+    let g:ale_echo_msg_error_str = '✷ Error'
+    let g:ale_echo_msg_warning_str = '⚠ Warning'
+    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+    let g:ale_statusline_format = ['✘ %d', '❗ %d', '✔ ok']
+    let g:ale_linters = {'javascript': ['eslint'] }
+else
+    Plug 'scrooloose/syntastic'
+    Plug 'scrooloose/syntastic'
+    Plug 'mtscout6/syntastic-local-eslint.vim'
+    nmap <F12> :SyntasticCheck<CR>
+    nmap <C-F12> :SyntasticInfo<CR>
+    "set statusline+=%{SyntasticStatuslineFlag()}
+    "let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['php', 'javascript', 'xml', 'xslt'], 'passive_filetypes': ['html.js', 'html'] }
+    let g:syntastic_error_symbol = '✗'
+    let g:syntastic_warning_symbol = '⚠'
+    let g:syntastic_check_on_open = 0
+    let g:syntastic_enable_signs = 1
+    let g:syntastic_check_on_wq = 0
+    let g:syntastic_javascript_checkers = ['eslint']
+endif
+" }}}
 
 " {{{ Pour NERDCommenter : gestion des commentaires pour plusieurs languages
 " -----------------------------------------------------------
@@ -99,28 +139,13 @@ let NERDSpaceDelims=1               " space around delimiters
 let NERDRemoveExtraSpaces=1
 " }}}
 
-" pour entrourer ou détrouer des mots/paragrpahe etc.
-Plug 'tpope/vim-surround'
 
-" ...
-"Plug 'tpope/vim-unimpaired'
-
-" des barres en couleur et sympa status, buffer, tabs, etc.
-Plug 'bling/vim-airline'
-let g:airline#extensions#tabline#enabled = 1
-"Plug 'itchyny/lightline.vim'
 
 " Highlights trailing whitespace in red and provides :FixWhitespace to fix it.
 Plug 'bronson/vim-trailing-whitespace'
 
 " affiche les numéros ligen à partir la ligne courant
 "Plug 'myusuf3/numbers.vim'
-
-" recherche rapide dans des fichiers
-"Plug 'ctrlpvim/ctrlp.vim'
-
-" Visualise les indentations par des couleurs
-" Plug 'nathanaelkane/vim-indent-guides'
 
 " JSON highlighting and quote concealing
 Plug 'elzr/vim-json'
@@ -146,8 +171,10 @@ Plug 'othree/html5.vim'
 Plug 'terryma/vim-multiple-cursors'
 
 " visualise directment le code d'une couleur
-Plug 'skammer/vim-css-color'
-let g:cssColorVimDoNotMessMyUpdatetime = 1
+Plug 'ap/vim-css-color'
+"Plug 'gorodinskiy/vim-coloresque'
+"Plug 'skammer/vim-css-color'
+"let g:cssColorVimDoNotMessMyUpdatetime = 1
 
 
 " Permet de faire de rechercher la sélection visuelle
@@ -156,7 +183,7 @@ Plug 'nelstrom/vim-visual-star-search'
 
 " Affiche les tags du fichier courant
 Plug 'majutsushi/tagbar'
-nmap <F8> :TagbarToggle<CR>
+nmap <F4> :TagbarToggle<CR>
 
 " Edit the file with an existing Vim if possible
 "Plug 'svintus/vim-editexisting'
@@ -346,7 +373,10 @@ let g:savevers_dirs = &backupdir      " Même répertoire de sauvegarde que pour
 " {{{ Mapping
 " -----------------------------------------------------------
 
-let mapleader = ","            " , is easier to type than \
+" , is easier to type than \
+let mapleader = ','
+let g:mapleader = ','
+"
 
 " use gvim like other application (Ubuntu Shell, Chrome, etc.)
 if has('gui_running')
@@ -360,6 +390,12 @@ if has('gui_running')
     map <C-S-w> :bd!<cr>
     imap <C-S-w> <C-O>:bd!<cr>
     cmap <C-S-w> <c-c>:bd!<cr>
+
+    " CTRL-c to copy to system clipboard
+    vnoremap <C-c> "*y
+
+    " CTRL-V to paste yanked content
+    inoremap <C-V> <C-R>"
 end
 
 
